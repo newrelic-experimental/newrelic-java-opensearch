@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Implementation-Title: com.newrelic.instrumentation.labs.opensearch-2.10
+Implementation-Vendor: New Relic Labs
+Implementation-Vendor-Id: com.newrelic.labs
+Implementation-Version: 1.0
+

@@ -1,1 +1,3 @@
 rootProject.name = 'java-instrumentation-template'
+include 'opensearch'
+include 'opensearch-2.10'
