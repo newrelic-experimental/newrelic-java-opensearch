@@ -2,6 +2,8 @@
 // Build.gradle generated for instrumentation module opensearch-high-level-rest-client
 
 apply plugin: 'java'
+sourceCompatibility=JavaVersion.VERSION_11
+targetCompatibility=JavaVersion.VERSION_11
 
 dependencies {
    implementation 'org.opensearch.client:opensearch-rest-high-level-client:2.0.0'
