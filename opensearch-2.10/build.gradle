@@ -2,6 +2,8 @@
 // Build.gradle generated for instrumentation module opensearch-2.10
 
 apply plugin: 'java'
+sourceCompatibility=JavaVersion.VERSION_11
+targetCompatibility=JavaVersion.VERSION_11
 
 dependencies {
 	compileOnly group: 'org.opensearch', name: 'opensearch', version: '2.10.0'
