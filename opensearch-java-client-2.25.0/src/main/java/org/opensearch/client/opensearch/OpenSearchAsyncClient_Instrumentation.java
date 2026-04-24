@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-import com.newrelic.api.agent.Trace;
-import org.opensearch.client.ApiClient;
 import org.opensearch.client.opensearch._types.ErrorResponse;
 import org.opensearch.client.opensearch._types.InlineScript;
 import org.opensearch.client.opensearch._types.query_dsl.Query;
@@ -63,8 +61,6 @@ import org.opensearch.client.opensearch.core.ScriptsPainlessExecuteRequest;
 import org.opensearch.client.opensearch.core.ScriptsPainlessExecuteResponse;
 import org.opensearch.client.opensearch.core.SearchRequest;
 import org.opensearch.client.opensearch.core.SearchResponse;
-import org.opensearch.client.opensearch.core.SearchShardsRequest;
-import org.opensearch.client.opensearch.core.SearchShardsResponse;
 import org.opensearch.client.opensearch.core.SearchTemplateRequest;
 import org.opensearch.client.opensearch.core.SearchTemplateResponse;
 import org.opensearch.client.opensearch.core.TermsEnumRequest;
@@ -89,14 +85,14 @@ import com.newrelic.api.agent.weaver.Weaver;
 import com.newrelic.instrumentation.labs.opensearch.javaclient.NRCompletion;
 import com.newrelic.instrumentation.labs.opensearch.javaclient.Utils;
 
-@Weave
-public abstract class OpenSearchAsyncClient extends ApiClient<OpenSearchTransport, OpenSearchAsyncClient> {
+@Weave(originalName = "org.opensearch.client.opensearch.OpenSearchAsyncClient")
+public abstract class OpenSearchAsyncClient_Instrumentation extends OpenSearchAsyncClientBase_Instrumentation<OpenSearchAsyncClient_Instrumentation> {
 
-	public OpenSearchAsyncClient(OpenSearchTransport transport) {
+	public OpenSearchAsyncClient_Instrumentation(OpenSearchTransport transport) {
 		super(transport, null);
 	}
 
-	public OpenSearchAsyncClient(OpenSearchTransport transport, TransportOptions transportOptions) {
+	public OpenSearchAsyncClient_Instrumentation(OpenSearchTransport transport, TransportOptions transportOptions) {
 		super(transport, transportOptions);
 	}
 
@@ -629,28 +625,6 @@ public abstract class OpenSearchAsyncClient extends ApiClient<OpenSearchTranspor
 		Utils.recordRequest(attributes, payloadObj, requestUrl, method);
 		CompletableFuture<SearchResponse<TDocument>> future = Weaver.callOriginal();
 		NRCompletion<SearchResponse<TDocument>> completionListener = new NRCompletion<SearchResponse<TDocument>>(Utils.getOperationFromRequest(request), params, attributes);
-		return future.whenComplete(completionListener);	
-	}
-
-	@Trace(leaf = true)
-	public CompletableFuture<SearchShardsResponse> searchShards(SearchShardsRequest request) {
-		Map<String, String> collectionAttr = new HashMap<String, String>();
-		String index = Utils.getObjectString(request.index());
-		if(index != null && !index.isEmpty()) {
-			collectionAttr.put("index", index);
-		} else {
-			collectionAttr.put(" ", "");
-		}
-		Endpoint<SearchShardsRequest, SearchShardsResponse, ErrorResponse> endPoint = SearchShardsRequest._ENDPOINT;
-		DatastoreParameters params = Utils.getParams(request, collectionAttr, endPoint.queryParameters(request), null);
-		Object payloadObj = endPoint.hasRequestBody() ? Utils.getRequestBody(request, transport.jsonpMapper()) : null;;
-		String requestUrl = endPoint.requestUrl(request);
-		String method = endPoint.method(request);
-		
-		HashMap<String, Object> attributes = new HashMap<String, Object>();
-		Utils.recordRequest(attributes, payloadObj, requestUrl, method);
-		CompletableFuture<SearchShardsResponse> future = Weaver.callOriginal();
-		NRCompletion<SearchShardsResponse> completionListener = new NRCompletion<SearchShardsResponse>(Utils.getOperationFromRequest(request), params, attributes);
 		return future.whenComplete(completionListener);	
 	}
 
