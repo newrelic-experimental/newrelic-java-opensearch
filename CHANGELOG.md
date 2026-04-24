@@ -1,3 +1,6 @@
+## Version: [v1.0.1](https://github.com/newrelic-experimental/newrelic-java-opensearch/releases/tag/v1.0.1) | Created: 2026-04-24
+
+
 ## Installation
 
 To install:
