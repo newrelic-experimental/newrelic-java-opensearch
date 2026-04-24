@@ -1,4 +1,4 @@
-rootProject.name = 'java-instrumentation-template'
+rootProject.name = 'opensearch-instrumentation'
 include 'opensearch'
 include 'opensearch-2.10'
 include 'opensearch-3.0.0'
